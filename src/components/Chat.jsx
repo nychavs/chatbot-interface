@@ -5,44 +5,42 @@ import axios from "axios";
 
 function Chat() {
 
-    //     const cors = require('cors');
-    //     const corsOptions ={
-    //     origin:'http://localhost:5000', 
-    //     credentials:true,            //access-control-allow-credentials:true
-    //     optionSuccessStatus:200
-    // }
-    //     app.use(cors(corsOptions));
-
     const [input, setInput] = useState({})
+    const [data, setData] = useState([])
+
+    const newest_question = () =>{
+        all_questions = axios.get("http://127.0.0.1:5000/question/?format=json")
+        all_questions = (all_questions.json())
+        newest = 0
+         
+        for (var i = 0; i< all_questions.length; i++){
+            if (i > newest){
+                newest = i
+            }
+        }
+        newest_answer = all_questions[newest]['avillaAnswer']
+        apiAnswerid = newest
+        setence = newest_answer
+    }
 
     const apiGet = async () => {
-        axios.get("http://127.0.0.1:5000/question/1/?format=json", {
-            mode: 'cors',
-            headers: {
-                'Access-Control-Allow-Origin':'*',
-                'X-Custom-Header': 'XMLHttpRequest',
-            }
+        axios.get("http://127.0.0.1:5000/question/" + apiAnswerid + "?format=json")
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => console.log(error))
+            setData(response.json())
+    }
+
+    const apiPost = async () => {
+        await axios.post("http://127.0.0.1:8000/question/?format=json", {
+            userQuestion: input.text,
+            avillaAnswer: ""
         })
             .then(response => {
                 console.log(response)
             })
             .catch(error => console.log(error))
-    }
-
-    const apiPost = async () => {
-
-
-        
-        await axios.post("http://127.0.0.1:5000/question/?format=json", {
-            text: input.text
-            
-        })
-        
-            .then(response => {
-                console.log(response)
-                console.log('caiu aki bom')
-            })
-            .catch(error => console.log(error),console.log('caiu aki mau'))
     }
 
     const handleChange = (event) => {
@@ -59,6 +57,10 @@ function Chat() {
         console.log(input)
         apiPost()
     }
+    
+    useEffect(()=>{
+        apiGet();
+      }, [])
 
     return (
         <>
@@ -80,6 +82,7 @@ function Chat() {
                     >Concluido
                     </button>
                 </form>
+                <p>your question: {data.avillaAnswer}</p>
                 {/* <div className="w-96 text-justify">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum et voluptatibus amet cum hic eos, deserunt repellat voluptatem incidunt dolorem vel qui?
             </div> */}
