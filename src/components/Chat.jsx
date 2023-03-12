@@ -7,29 +7,26 @@ function Chat() {
 
     const [input, setInput] = useState({})
     const [data, setData] = useState([])
+    const [idAPI, setidAPI] = useState('')
 
     const newest_question = () =>{
-        all_questions = axios.get("http://127.0.0.1:5000/question/?format=json")
-        all_questions = (all_questions.json())
-        newest = 0
-         
-        for (var i = 0; i< all_questions.length; i++){
-            if (i > newest){
-                newest = i
-            }
-        }
-        newest_answer = all_questions[newest]['avillaAnswer']
-        apiAnswerid = newest
-        setence = newest_answer
+        console.log('teste')
+        axios.get("http://127.0.0.1:8000/question/?format=json")
+        .then((response) => {
+            var object = (response.data)
+            var tamanho = ((object).length) + 1
+            setidAPI(tamanho)
+        })
+        apiGet()
     }
 
     const apiGet = async () => {
-        axios.get("http://127.0.0.1:5000/question/" + apiAnswerid + "?format=json")
-            .then(response => {
-                console.log(response)
+        console.log(idAPI)
+        axios.get("http://127.0.0.1:8000/question/"+ idAPI +"/?format=json")
+            .then((response) => {
+                setData(response.data)
             })
             .catch(error => console.log(error))
-            setData(response.json())
     }
 
     const apiPost = async () => {
@@ -41,7 +38,10 @@ function Chat() {
                 console.log(response)
             })
             .catch(error => console.log(error))
-    }
+
+            setTimeout(newest_question, 5000)
+            alert("A Avilla já esta procurando a reposta para a sua pergunta")
+            }
 
     const handleChange = (event) => {
         event.persist()
@@ -49,19 +49,16 @@ function Chat() {
             ...input,
             [event.target.name]: event.target.value,
         }))
+        let newData = []
+        setData(newData)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log('handle submit')
-        console.log(input)
+        console.log(input)        
         apiPost()
     }
     
-    useEffect(()=>{
-        apiGet();
-      }, [])
-
     return (
         <>
             <div className="items-center justify-center">
@@ -78,7 +75,7 @@ function Chat() {
                     ></input>
                     <button
                         id='btn'
-                        onClick={handleChange}
+                        onClick={handleSubmit}
                     >Concluido
                     </button>
                 </form>
