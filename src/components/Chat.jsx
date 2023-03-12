@@ -2,12 +2,26 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Chat() {
 
     const [input, setInput] = useState({})
     const [data, setData] = useState([])
     const [idAPI, setidAPI] = useState('')
+
+    const toastOptions = {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
 
     const newest_question = () =>{
         console.log('teste')
@@ -40,7 +54,8 @@ function Chat() {
             .catch(error => console.log(error))
 
             setTimeout(newest_question, 5000)
-            alert("A Avilla já esta procurando a reposta para a sua pergunta")
+            toast.success("A Avilla já esta procurando a reposta para a sua pergunta", toastOptions)
+            console.log('oio')
             }
 
     const handleChange = (event) => {
@@ -58,7 +73,7 @@ function Chat() {
         console.log(input)        
         apiPost()
     }
-    
+
     return (
         <>
             <div className="items-center justify-center">
@@ -79,12 +94,12 @@ function Chat() {
                     >Concluido
                     </button>
                 </form>
-                <p>your question: {data.avillaAnswer}</p>
+                <p>Avilla informa: {data.avillaAnswer}</p>
                 {/* <div className="w-96 text-justify">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum et voluptatibus amet cum hic eos, deserunt repellat voluptatem incidunt dolorem vel qui?
             </div> */}
             </div>
-
+            <ToastContainer />
         </>
     )
 }
