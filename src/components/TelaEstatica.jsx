@@ -26,9 +26,9 @@ export default function TelaEstatica() {
           <AvilaSVG />
         </div>
         
-        <div className="absolute bottom-16 ">
+        {/* <div className="absolute bottom-16 ">
           <Acessibilidade />
-        </div>
+        </div> */}
 
       </div>
     </>

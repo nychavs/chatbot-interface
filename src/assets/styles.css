@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    justify-content: center;
+    margin-left: 40%;
+    /* margin-right: 5vw; */
+    padding: 0;
+    flex-direction: column;
+}
+
+.pergunta{
+    margin-bottom: 2vw;
+}
+.resposta{
+    margin-top: 2vw;
+}
+.avilla{
+    /* margin-top: 1vw; */
+    width: 30vw;
+}
+.btn{
+    margin-right: 2vw;
+    background-color: rgb(70, 210, 70);   
+    border-radius: 0.5vw; 
+    margin-top: 1vw;
+    width: 10vw;
+    height: 2vw;
+    align-items: center;
+}
+.forms{
+    display: flex;
+    width: 20vw;
+    flex-direction: column;
+}
