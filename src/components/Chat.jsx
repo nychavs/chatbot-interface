@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import styles from "../assets/styles.css"
 
 function Chat() {
 
@@ -14,7 +14,7 @@ function Chat() {
 
     const toastOptions = {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -53,9 +53,8 @@ function Chat() {
             })
             .catch(error => console.log(error))
 
-            setTimeout(newest_question, 5000)
-            toast.success("A Avilla já esta procurando a reposta para a sua pergunta", toastOptions)
-            console.log('oio')
+            setTimeout(newest_question, 2000)
+            toast.success("A Avilla já esta procurando a resposta para a sua pergunta", toastOptions)
             }
 
     const handleChange = (event) => {
@@ -76,25 +75,28 @@ function Chat() {
 
     return (
         <>
-            <div className="items-center justify-center">
-                <div className="text-xl text-gray-500 mb-8">
+            <div className="container">
+                <div className="pergunta">
                     Sua pergunta:
                 </div>
-                <form onSubmit={handleSubmit} id='form'>
+                <form onSubmit={handleSubmit} className="forms"
+                id='form'>
                     <input
                         type='text'
                         id='question-text'
                         name='text'
-                        placeholder='your question'
+                        placeholder='Digite aqui'
                         onChange={handleChange}
                     ></input>
-                    <button
+                    <button className="btn"
                         id='btn'
                         onClick={handleSubmit}
-                    >Concluido
+                    >Enviar
                     </button>
                 </form>
-                <p>Avilla informa: {data.avillaAnswer}</p>
+                <div className="resposta">
+                <p className="avilla">Avilla informa: {data.avillaAnswer}</p>
+                </div>
                 {/* <div className="w-96 text-justify">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum et voluptatibus amet cum hic eos, deserunt repellat voluptatem incidunt dolorem vel qui?
             </div> */}
